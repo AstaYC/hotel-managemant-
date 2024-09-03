@@ -5,22 +5,45 @@ public class Main {
         Hotel hotel = new Hotel();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to the Hotel Management System");
-        System.out.println("Please enter the following details to create a reservation:");
+        while(true){
+            System.out.println("\n Hotel Management System ");
+            System.out.println("1. Create a new reservation");
+            System.out.println("2. Modify an existing reservation");
+            System.out.println("3. Cancel a reservation");
+            System.out.println("4. View all reservations");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
 
-        System.out.print("Customer Name: ");
-        String customerName = scanner.nextLine();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.println("Room Type : ") ;
-        String roomType = scanner.nextLine();
+            switch(choice){
+                case 1:
+                    hotel.creatReservation(scanner);
+                    break;
 
-        System.out.println(" checkInDate (YYYY-MM-DD) : ") ;
-        String checkInDate = scanner.nextLine();
+                case 2:
+                    hotel.modifyReservation(scanner);
+                    break;
 
-        System.out.println(" checkOutDate (YYYY-MM-DD) : ") ;
-        String checkOutDate = scanner.nextLine();
+                case 3:
+                    hotel.canselReservation(scanner);
+                    break;
 
-        hotel.creatReservation(customerName, roomType, checkInDate, checkOutDate);
-        hotel.TestingResult();
+                case 4:
+                    hotel.listReservations();
+                    break;
+
+                case 5:
+                    System.out.println("Thank you for using Hotel Management");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+
+        }
+
     }
 }

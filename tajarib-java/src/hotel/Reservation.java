@@ -31,6 +31,19 @@ public class Reservation  {
     public String getCheckOutDate(){
         return checkOutDate;
     }
+
+    public void setRoomType(String roomType){
+        this.roomType = roomType;
+    }
+
+    public void setCheckInDate(String checkInDate){
+        this.checkInDate = checkInDate;
+    }
+
+    public void setCheckOutDate(String checkOutDate){
+        this.checkOutDate = checkOutDate;
+    }
+
     @Override
     public String toString(){
         return "Reservation Id : " + reservationId + " , Customer : " + customerName + ", Room: " + roomType + " , Check-In: " + checkInDate + " , Check-Out: " + checkOutDate;
