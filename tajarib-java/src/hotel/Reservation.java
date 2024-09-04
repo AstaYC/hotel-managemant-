@@ -19,15 +19,19 @@ public class Reservation  {
     public int getReservationId(){
         return reservationId;
     }
+
     public String getCustomerName(){
         return customerName;
     }
+
     public String getRoomType(){
         return roomType;
     }
+
     public String getCheckInDate(){
         return checkInDate;
     }
+
     public String getCheckOutDate(){
         return checkOutDate;
     }

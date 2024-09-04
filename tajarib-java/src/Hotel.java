@@ -15,7 +15,7 @@ public class Hotel {
         System.out.println("Customer Name: ");
         String customerName = scanner.nextLine();
 
-        System.out.println("Room Type : ");
+        System.out.println("Room Type : (please write it with a correct word 'Single , Double , Suite')" );
         String roomType = scanner.nextLine();
 
         System.out.println(" checkInDate (YYYY-MM-DD) : ") ;
