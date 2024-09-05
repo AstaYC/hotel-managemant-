@@ -6,6 +6,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while(true){
+
             System.out.println("\n Hotel Management System ");
             System.out.println("1. Create a new reservation");
             System.out.println("2. Modify an existing reservation");
@@ -42,8 +43,6 @@ public class Main {
                 default:
                     System.out.println("Invalid choice");
             }
-
         }
-
     }
 }

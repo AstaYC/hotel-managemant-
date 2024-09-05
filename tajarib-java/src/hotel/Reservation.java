@@ -1,19 +1,22 @@
 package hotel;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+
 public class Reservation  {
     private int reservationId;
     private String customerName;
     private String roomType;
-    private String checkInDate;
-    private String checkOutDate;
+    private LocalDate  checkInDate;
+    private LocalDate checkOutDate;
 
 
     public  Reservation (int reservationID , String customerName , String roomType , String checkInDate , String checkOutDate){
         this.reservationId = reservationID;
         this.customerName = customerName;
         this.roomType = roomType;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
+        this.checkInDate = LocalDate.parse(checkInDate);
+        this.checkOutDate = LocalDate.parse(checkOutDate);
     }
 
     public int getReservationId(){
@@ -28,11 +31,11 @@ public class Reservation  {
         return roomType;
     }
 
-    public String getCheckInDate(){
+    public LocalDate getCheckInDate(){
         return checkInDate;
     }
 
-    public String getCheckOutDate(){
+    public LocalDate getCheckOutDate(){
         return checkOutDate;
     }
 
@@ -40,11 +43,11 @@ public class Reservation  {
         this.roomType = roomType;
     }
 
-    public void setCheckInDate(String checkInDate){
+    public void setCheckInDate(LocalDate checkInDate){
         this.checkInDate = checkInDate;
     }
 
-    public void setCheckOutDate(String checkOutDate){
+    public void setCheckOutDate(LocalDate checkOutDate){
         this.checkOutDate = checkOutDate;
     }
 

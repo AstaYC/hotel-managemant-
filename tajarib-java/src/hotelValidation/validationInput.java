@@ -1,9 +1,11 @@
+package hotel;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class validationInput {
-    public boolean costumerValidation(String name){
+    public boolean custumerValidation(String name){
         return name != null && name.matches("[a-zA-Z\\s]+");
     }
 

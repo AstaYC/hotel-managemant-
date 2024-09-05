@@ -1,8 +1,11 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import hotel.validationInput;
 import hotel.Reservation;
+
 
 public class Hotel {
     private List<Reservation> reservations = new ArrayList<Reservation>();
@@ -11,22 +14,68 @@ public class Hotel {
     public void creatReservation (Scanner scanner){
         System.out.println("Welcome to the Hotel Management System");
         System.out.println("Please enter the following details to create a reservation:");
+        validationInput validate = new validationInput();
 
-        System.out.println("Customer Name: ");
-        String customerName = scanner.nextLine();
+        String customerName;
+        while(true){
+             System.out.println("Customer Name: ");
+             customerName = scanner.nextLine();
+             if (validate.custumerValidation(customerName)){
+                 break;
+             }else{
+                 System.out.println("Invalid Customer Name");
+         }
+         }
 
-        System.out.println("Room Type : (please write it with a correct word 'Single , Double , Suite')" );
-        String roomType = scanner.nextLine();
+        String roomType;
+        while(true){
+            System.out.println("Room Type : (please write it with a correct word 'Single , Double , Suite')" );
+            roomType = scanner.nextLine();
+            if (validate.roomTypeValidation(roomType)){
+                break;
+            }else{
+                System.out.println("Invalid Room Type");
+            }
+        }
 
-        System.out.println(" checkInDate (YYYY-MM-DD) : ") ;
-        String checkInDate = scanner.nextLine();
+        String checkInDateStr;
+        while(true){
+            System.out.println(" checkInDate (YYYY-MM-DD) : ") ;
+            checkInDateStr = scanner.nextLine();
 
-        System.out.println(" checkOutDate (YYYY-MM-DD) : ") ;
-        String checkOutDate = scanner.nextLine();
+            if(validate.checkDateValidation(checkInDateStr)){
+                break;
+            }else{
+                System.out.println("Invalid CheckIn Date");
+            }
+        }
+        LocalDate checkInDate = LocalDate.parse(checkInDateStr);
 
-        Reservation newReservation = new Reservation(nextReservationId++ , customerName , roomType , checkInDate , checkOutDate);
-        reservations.add(newReservation);
-        System.out.println("New Reservation added : " + newReservation);
+        String checkOutDateStr ;
+
+        while(true){
+            System.out.println(" checkOutDate (YYYY-MM-DD) : ") ;
+            checkOutDateStr = scanner.nextLine();
+            if(validate.checkDateValidation(checkOutDateStr)){
+                break;
+            }else {
+                System.out.println("Invalid CheckOut Date");
+            }
+        }
+
+        LocalDate checkOutDate = LocalDate.parse(checkOutDateStr);
+
+        if (isRoomAvailable(roomType, checkInDate, checkOutDate)) {
+
+            Reservation newReservation = new Reservation(nextReservationId++ , customerName , roomType , checkInDate.toString(), checkOutDate.toString());
+            reservations.add(newReservation);
+            System.out.println("New Reservation added : " + newReservation);
+        }else{
+            System.out.println("Room Not Available in this date");
+            return;
+        }
+
+
     }
 
     public void TestingResult (){
@@ -75,14 +124,14 @@ public class Hotel {
         String newCheckIn = scanner.nextLine();
 
         if (!newCheckIn.isEmpty()){
-            reservation.setCheckInDate(newCheckIn);
+            reservation.setCheckInDate(LocalDate.parse(newCheckIn));
         }
 
         System.out.println("Enter new checkout date  (or press Enter to keep) " + reservation.getCheckOutDate());
         String newCheckOut = scanner.nextLine();
 
         if (!newCheckOut.isEmpty()){
-            reservation.setCheckOutDate(newCheckOut);
+            reservation.setCheckOutDate(LocalDate.parse(newCheckOut));
         }
 
         System.out.println("Reservation Modified successfully");
@@ -120,4 +169,14 @@ public class Hotel {
         }
 
     }
+
+    public boolean isRoomAvailable(String roomType , LocalDate checkInDate , LocalDate checkOutDate){
+        for (Reservation reservation : reservations){
+            if (reservation.getRoomType().equalsIgnoreCase(roomType) && checkInDate.isBefore(reservation.getCheckOutDate()) && checkOutDate.isAfter(reservation.getCheckInDate())) {
+                return false ;
+            }
+        }
+        return true ;
+    }
+
 }
