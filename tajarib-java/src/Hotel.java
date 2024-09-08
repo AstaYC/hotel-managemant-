@@ -197,5 +197,9 @@ public class Hotel {
         System.out.println(listCustomer);
     }
 
+    public void testGit (){
+
+    }
+
 
 }
