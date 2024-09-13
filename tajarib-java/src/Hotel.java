@@ -180,26 +180,4 @@ public class Hotel {
     }
 
 
-
-
-    public  getClient(String checkInDateStr , String checkOutDateStr){
-        LocalDate checkInDate = LocalDate.parse(checkInDateStr);
-        LocalDate checkOutDate = LocalDate.parse(checkOutDateStr);
-
-        ArrayList<String> listCustomer = new ArrayList<>();
-
-        for (Reservation reservation : reservations){
-              if (checkInDate.isAfter(reservation.getCheckInDate()) && checkOutDate.isBefore(reservation.getCheckOutDate())) {
-                  listCustomer.add(reservation.getCustomerName());
-              }
-        }
-
-        System.out.println(listCustomer);
-    }
-
-    public void testGit (){
-
-    }
-
-
 }
