@@ -1,6 +1,6 @@
 package com.hotelmanagement.DAO.impl;
 
-import com.hotelmanagement.DAO.ReservationDAO;
+import com.hotelmanagement.DAO.Interfaces.ReservationDAO;
 import com.hotelmanagement.Models.Reservation;
 import com.hotelmanagement.Util.DatabaseConnectionManager;
 

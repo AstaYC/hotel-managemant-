@@ -1,4 +1,4 @@
-package com.hotelmanagement.DAO;
+package com.hotelmanagement.DAO.Interfaces;
 import com.hotelmanagement.Models.Room;
 import java.sql.SQLException;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.hotelmanagement.DAO.impl;
 
-import com.hotelmanagement.DAO.CustomerDAO;
+import com.hotelmanagement.DAO.Interfaces.CustomerDAO;
 import com.hotelmanagement.Models.Customer;
 import com.hotelmanagement.Util.DatabaseConnectionManager;
 

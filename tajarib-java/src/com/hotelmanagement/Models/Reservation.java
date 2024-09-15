@@ -32,6 +32,8 @@ public class Reservation {
 
     public LocalDate getCheckOutDate() { return checkOutDate; }
     public void setCheckOutDate(LocalDate checkOutDate) { this.checkOutDate = checkOutDate; }
+    
+
 
     @Override
     public String toString() {
