@@ -51,5 +51,24 @@ public class TypeRoomDAOImpl implements TypeRoomDAO {
         }
         return typeRoom;
     }
+
+    public TypeRoom getTypeRoomByType(String Type) throws SQLException{
+        String query = "select * from typeroom where type = ?";
+        TypeRoom typeRoom = null;
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, Type);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                typeRoom = new TypeRoom(
+                        resultSet.getInt("id"),
+                        resultSet.getString("type")
+                );
+            }
+        }
+        return typeRoom;
+    }
 }
 

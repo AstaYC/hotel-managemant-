@@ -80,4 +80,24 @@ public class CustomerDAOImpl implements CustomerDAO {
             preparedStatement.executeUpdate();
         }
     }
+
+    public Customer getCustomerByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM customer WHERE email = ?";
+        Customer customer = null;
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                customer = new Customer(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone")
+                );
+            }
+        }
+        return customer;
+    }
 }

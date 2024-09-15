@@ -1,10 +1,10 @@
-package hotel;
+package www.;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class validationInput {
+public class InputValidations {
     public boolean custumerValidation(String name){
         return name != null && name.matches("[a-zA-Z\\s]+");
     }
