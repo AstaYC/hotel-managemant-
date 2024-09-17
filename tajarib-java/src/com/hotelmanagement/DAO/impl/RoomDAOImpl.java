@@ -35,27 +35,27 @@ public class RoomDAOImpl implements RoomDAO {
 
     @Override
     public List<Room> getAllRoomsByTypeId(int id) throws SQLException {
-        String query = "SELECT * FROM room where type_room_id = ? ";
+        String query = "SELECT * FROM room WHERE type_room_id = ?";
         List<Room> rooms = new ArrayList<>();
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query){
-                 preparedStatement.setInt(1, id);
-                 ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-                   while (resultSet.next()) {
-                       rooms.add(new Room(
-                               resultSet.getInt("id"),
-                               resultSet.getDouble("price"),
-                               resultSet.getInt("type_room_id")
-                       )
-                   );
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                rooms.add(new Room(
+                        resultSet.getInt("id"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("type_room_id")
+                ));
             }
 
-        };
+        }
         return rooms;
-
     }
+
 
     @Override
     public void updateRoom(Room room) throws SQLException {

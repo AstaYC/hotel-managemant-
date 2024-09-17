@@ -20,7 +20,7 @@ public class InputValidation {
         return false ;
     }
 
-    public boolean checkDateValidation(String dateStr) {
+    public boolean  checkDateValidation(String dateStr) {
         try {
             LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ISO_DATE);
             return !date.isBefore(LocalDate.now());

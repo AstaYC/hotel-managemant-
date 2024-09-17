@@ -17,9 +17,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(2, customer.getName());
-            preparedStatement.setString(3, customer.getEmail());
-            preparedStatement.setString(4, customer.getPhone());
+            preparedStatement.setString(1, customer.getName());
+            preparedStatement.setString(2, customer.getEmail());
+            preparedStatement.setString(3, customer.getPhone());
 
             preparedStatement.executeUpdate();
         }

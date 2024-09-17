@@ -17,6 +17,13 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
     }
 
+    public Reservation(int customerId, int roomId, LocalDate checkInDate, LocalDate checkOutDate) {
+        this.customerId = customerId;
+        this.roomId = roomId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+    }
+
     // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

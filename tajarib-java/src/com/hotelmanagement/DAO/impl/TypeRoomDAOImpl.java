@@ -23,7 +23,7 @@ public class TypeRoomDAOImpl implements TypeRoomDAO {
             while (resultSet.next()) {
                 typeRooms.add(new TypeRoom(
                         resultSet.getInt("id"),
-                        resultSet.getString("type_name")
+                        resultSet.getString("type")
                 ));
             }
         }
@@ -45,7 +45,7 @@ public class TypeRoomDAOImpl implements TypeRoomDAO {
             if (resultSet.next()) {
                 typeRoom = new TypeRoom(
                         resultSet.getInt("id"),
-                        resultSet.getString("type_name")
+                        resultSet.getString("type")
                 );
             }
         }

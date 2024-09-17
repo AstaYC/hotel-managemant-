@@ -1,8 +1,12 @@
+package com.hotelmanagement.MainClass;
+
+import java.sql.SQLException;
 import java.util.Scanner;
+import com.hotelmanagement.Controllers.ReservationController;
 
 public class Main {
-    public static void main (String[] args) {
-        Hotel hotel = new Hotel();
+    public static void main (String[] args) throws SQLException {
+        ReservationController reservationController = new ReservationController();
         Scanner scanner = new Scanner(System.in);
 
         while(true){
@@ -20,26 +24,8 @@ public class Main {
 
             switch(choice){
                 case 1:
-                    hotel.creatReservation(scanner);
+                    reservationController.createReservation(scanner);
                     break;
-
-                case 2:
-                    hotel.modifyReservation(scanner);
-                    break;
-
-                case 3:
-                    hotel.canselReservation(scanner);
-                    break;
-
-                case 4:
-                    hotel.listReservations();
-                    break;
-
-                case 5:
-                    System.out.println("Thank you for using Hotel Management");
-                    scanner.close();
-                    return;
-
                 default:
                     System.out.println("Invalid choice");
             }

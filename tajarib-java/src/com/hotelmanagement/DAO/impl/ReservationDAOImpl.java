@@ -5,6 +5,7 @@ import com.hotelmanagement.Models.Reservation;
 import com.hotelmanagement.Util.DatabaseConnectionManager;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,16 +13,15 @@ public class ReservationDAOImpl implements ReservationDAO {
 
     @Override
     public void insertReservation(Reservation reservation) throws SQLException {
-        String query = "INSERT INTO reservation (id, customer_id, room_id, check_in_date, check_out_date) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO reservation (customer_id, room_id, check_in_date, check_out_date) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, reservation.getId());
-            preparedStatement.setInt(2, reservation.getCustomerId());
-            preparedStatement.setInt(3, reservation.getRoomId());
-            preparedStatement.setDate(4, Date.valueOf(reservation.getCheckInDate()));
-            preparedStatement.setDate(5, Date.valueOf(reservation.getCheckOutDate()));
+            preparedStatement.setInt(1, reservation.getCustomerId());
+            preparedStatement.setInt(2, reservation.getRoomId());
+            preparedStatement.setDate(3, Date.valueOf(reservation.getCheckInDate()));
+            preparedStatement.setDate(4, Date.valueOf(reservation.getCheckOutDate()));
 
             preparedStatement.executeUpdate();
         }
@@ -93,6 +93,38 @@ public class ReservationDAOImpl implements ReservationDAO {
     @Override
     public void deleteReservation(int id) throws SQLException {
         String query = "DELETE FROM reservation WHERE id = ?";
+    }
 
+    public List<Reservation> getReservationByEmail(String email) throws SQLException {
+        List<Reservation> reservations = new ArrayList<>();
+
+        String query = "SELECT r.id, r.customer_id, r.room_id, r.check_in_date, r.check_out_date " +
+                "FROM reservation r " +
+                "JOIN customer c " +
+                "ON r.customer_id = c.id " +
+                "WHERE c.email = ?";
+
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int reservationId = resultSet.getInt("id");
+                int customerId = resultSet.getInt("customer_id");
+                int roomId = resultSet.getInt("room_id");
+                LocalDate checkInDate = resultSet.getDate("check_in_date").toLocalDate();
+                LocalDate checkOutDate = resultSet.getDate("check_out_date").toLocalDate();
+
+                Reservation reservation = new Reservation(reservationId, customerId, roomId, checkInDate, checkOutDate);
+                reservations.add(reservation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error fetching reservations by email");
+        }
+
+        return reservations;
     }
 }
