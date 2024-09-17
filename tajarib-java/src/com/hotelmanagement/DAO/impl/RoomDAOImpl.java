@@ -56,31 +56,17 @@ public class RoomDAOImpl implements RoomDAO {
         return rooms;
     }
 
-
     @Override
-    public void updateRoom(Room room) throws SQLException {
-        String query = "UPDATE room SET price = ?, type_room_id = ? WHERE id = ?";
-
+    public int getTotalNumberOfRooms() throws SQLException {
+        String query = "SELECT COUNT(*) FROM room";
         try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setDouble(1, room.getPrice());
-            preparedStatement.setInt(2, room.getTypeRoomId());
-            preparedStatement.setInt(3, room.getId());
-
-            preparedStatement.executeUpdate();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         }
+        return 0;
     }
 
-    @Override
-    public void deleteRoom(int id) throws SQLException {
-        String query = "DELETE FROM room WHERE id = ?";
-
-        try (Connection connection = DatabaseConnectionManager.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        }
-    }
 }

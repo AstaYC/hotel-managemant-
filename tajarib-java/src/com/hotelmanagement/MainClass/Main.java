@@ -16,7 +16,8 @@ public class Main {
             System.out.println("2. Modify an existing reservation");
             System.out.println("3. Cancel a reservation");
             System.out.println("4. View all reservations");
-            System.out.println("5. Exit");
+            System.out.println("5. Occupancy Rate");
+            System.out.println("6. Generated Revenue");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -25,6 +26,21 @@ public class Main {
             switch(choice){
                 case 1:
                     reservationController.createReservation(scanner);
+                    break;
+                case 2:
+                    reservationController.modifyReservation(scanner);
+                    break;
+                case 3:
+                    reservationController.deleteReservation(scanner);
+                    break;
+                case 4:
+                    reservationController.displayReservation(scanner);
+                    break;
+                case 5:
+                    reservationController.displayOccupancyRate();
+                    break;
+                case 6:
+                    reservationController.displayTotalRevenue();
                     break;
                 default:
                     System.out.println("Invalid choice");

@@ -15,6 +15,7 @@
     import com.hotelmanagement.Util.AvailableRoomValidation;
     import com.hotelmanagement.Util.InputValidation;
 
+    import java.math.BigDecimal;
     import java.sql.SQLException;
     import java.time.LocalDate;
     import java.util.ArrayList;
@@ -25,7 +26,7 @@
     public class ReservationController {
         private final CustomerDAOImpl customerDAO = new CustomerDAOImpl();
         private final ReservationDAOImpl reservationDAO = new ReservationDAOImpl();
-        private final RoomDAO roomDAO = new RoomDAOImpl();
+        private final RoomDAOImpl roomDAO = new RoomDAOImpl();
         private final InputValidation inputValidation = new InputValidation();
         private final AvailableRoomValidation availableRoomValidation = new AvailableRoomValidation();
 
@@ -179,35 +180,28 @@
             System.out.println("Reservation updated successfully.");
         }
 
+        public void deleteReservation(Scanner scanner) throws SQLException {
+
+            new ReservationController().displayCustomerReservation(scanner);
+
+            System.out.println("Enter the Reservation ID you want to delete: ");
+            int reservationId = scanner.nextInt();
+            scanner.nextLine();
+
+            Reservation reservationToDelete = reservationDAO.getReservationById(reservationId);
+            if (reservationToDelete == null) {
+                System.out.println("No reservation found with the given ID.");
+                return;
+            }
+
+            reservationDAO.deleteReservation(reservationId);
+            System.out.println("Reservation deleted successfully.");
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public void displayReservation(Scanner scanner) throws SQLException {
+            new ReservationController().displayCustomerReservation(scanner);
+        }
 
 
 
@@ -235,6 +229,32 @@
                 }
             }
         }
+
+        public void displayOccupancyRate() throws SQLException {
+
+            int totalRooms = roomDAO.getTotalNumberOfRooms();
+            int occupiedRooms = reservationDAO.getNumberOfOccupiedRooms();
+
+            if (totalRooms == 0) {
+                System.out.println("No rooms available to calculate occupancy rate.");
+                return;
+            }
+
+            double occupancyRate = ((double) occupiedRooms / totalRooms) * 100;
+
+            System.out.printf("Occupancy Rate: %.2f%%\n", occupancyRate);
+        }
+
+        public void displayTotalRevenue() {
+            try {
+                BigDecimal totalRevenue = reservationDAO.getTotalRevenue();
+                System.out.println("Total revenue generated: $" + totalRevenue);
+            } catch (SQLException e) {
+                System.out.println("Error calculating total revenue: " + e.getMessage());
+            }
+        }
+
+
 
     }
 

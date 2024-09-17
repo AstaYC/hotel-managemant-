@@ -4,6 +4,7 @@ import com.hotelmanagement.DAO.Interfaces.ReservationDAO;
 import com.hotelmanagement.Models.Reservation;
 import com.hotelmanagement.Util.DatabaseConnectionManager;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -93,6 +94,11 @@ public class ReservationDAOImpl implements ReservationDAO {
     @Override
     public void deleteReservation(int id) throws SQLException {
         String query = "DELETE FROM reservation WHERE id = ?";
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
     }
 
     public List<Reservation> getReservationByEmail(String email) throws SQLException {
@@ -127,4 +133,35 @@ public class ReservationDAOImpl implements ReservationDAO {
 
         return reservations;
     }
+
+    @Override
+    public int getNumberOfOccupiedRooms() throws SQLException {
+        String query = "SELECT COUNT(DISTINCT room_id) FROM reservation WHERE check_in_date <= CURRENT_DATE AND check_out_date >= CURRENT_DATE";
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public BigDecimal getTotalRevenue() throws SQLException {
+        String query = "SELECT SUM((check_out_date - check_in_date) * r.price)" +
+                " AS total_revenue " +
+                "FROM reservation AS res " +
+                "JOIN room AS r ON res.room_id = r.id " +
+                "WHERE check_in_date <= CURRENT_DATE AND check_out_date >= CURRENT_DATE;";
+        try (Connection connection = DatabaseConnectionManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getBigDecimal("total_revenue");
+            }
+        }
+        return BigDecimal.ZERO;
+    }
+
 }
