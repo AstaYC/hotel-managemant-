@@ -151,8 +151,7 @@ public class ReservationDAOImpl implements ReservationDAO {
     public BigDecimal getTotalRevenue() throws SQLException {
         String query = "SELECT SUM((check_out_date - check_in_date) * r.price)" +
                 " AS total_revenue " +
-                "FROM reservation AS res " +
-                "JOIN room AS r ON res.room_id = r.id " +
+                "FROM reservation AS res JOIN room AS r ON res.room_id = r.id " +
                 "WHERE check_in_date <= CURRENT_DATE AND check_out_date >= CURRENT_DATE;";
         try (Connection connection = DatabaseConnectionManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
